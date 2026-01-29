@@ -20,13 +20,11 @@
   border: 1px solid rgba(33, 63, 125, 0.15);
   background: var(--bg);
   padding: 15%;
-  // justify-items: center;
-  // align-items: center;
 }
 
 .formWrapper {
   max-width: 380px;
-  margin-top: 64px; // matches the “top whitespace” look
+  margin-top: 64px;
 }
 
 .welcome {

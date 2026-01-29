@@ -4,7 +4,6 @@ import styles from "./LogoPage.module.scss";
 export const LogoPage = () => {
   return (
     <section className={styles.container}>
-      {/* Brand group (logo + word) */}
       <div className={styles.brandGroup} aria-label="Lendsqr">
         <Image
           src="union.svg"
@@ -25,13 +24,12 @@ export const LogoPage = () => {
         />
       </div>
 
-      {/* Center illustration */}
       <div className={styles.illustrationWrap} aria-hidden="true">
         <Image
           src="/pablo-sign-in 1.svg"
           alt=""
           width={600}
-          height={338} // close enough; Next needs an integer height
+          height={338}
           className={styles.illustration}
           priority
         />
