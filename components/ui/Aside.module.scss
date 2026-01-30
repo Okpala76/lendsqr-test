@@ -1,0 +1,27 @@
+.containter {
+  background-color: rgb(168, 13, 13);
+  height: 100vh;
+  z-index: 20;
+  transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,)
+    var(--tw-skew-x,) var(--tw-skew-y,);
+  transition-property: all;
+  transition-timing-function: var(
+    --tw-ease,
+    var(--default-transition-timing-function) /* cubic-bezier(0.4, 0, 0.2, 1) */
+  );
+  transition-duration: var(
+    --tw-duration,
+    var(--default-transition-duration) /* 150ms */
+  );
+  --tw-duration: 200ms;
+  transition-duration: 200ms;
+  --tw-ease: var(--ease-in-out) /* cubic-bezier(0.4, 0, 0.2, 1) */;
+  transition-timing-function: var(--ease-in-out);
+}
+.open {
+  width: 283px;
+}
+
+.close {
+  width: 64px;
+}

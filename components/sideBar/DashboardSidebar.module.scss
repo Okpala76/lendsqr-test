@@ -1,0 +1,66 @@
+.sidebar {
+  height: 100%;
+  background: #ffffff;
+
+  // IMPORTANT: prevents children from spilling out
+  overflow: hidden;
+
+  // smooth width animation
+  transition: width 200ms ease;
+
+  // expanded width
+  width: 283px;
+  z-index: 9;
+}
+
+.sidebarCollapsed {
+  // collapsed width (enough for icon + padding)
+  width: 64px;
+  box-shadow: 5px 0px 20px 0px rgba(0, 0, 0, 0.04);
+  z-index: 10;
+}
+
+.toggleRow {
+  padding: 12px;
+  align-items: center;
+
+  &.close {
+    justify-items: center;
+    padding-top: 10%;
+  }
+
+  &.open {
+    justify-items: end;
+    padding-right: 10%;
+  }
+}
+
+.button {
+  background-color: transparent;
+  color: #213f7d;
+}
+
+.topNav {
+  margin-top: 8px;
+}
+
+.switchRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.switchRowCollapsed {
+  justify-content: center;
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  margin-right: 16px;
+  color: #213f7d;
+}
+
+.sections {
+  padding-bottom: 24px;
+}
