@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`min-h-screen flex flex-col ${workSans.className}`}>
+      <body className={`min-h-screen flex flex-col  ${workSans.className}`}>
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
