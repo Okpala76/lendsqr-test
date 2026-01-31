@@ -3,10 +3,12 @@
 import {
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { UsersFilterCard } from "./FilterCard";
+import Pagination from "./Pagination";
 import { TableHeader, TableRows, buildTableColumns } from "./TableComponents";
 import styles from "./UserTable.module.scss";
 import { DEFAULT_FILTERS, FilterDraft, UserRow } from "./types";
@@ -22,6 +24,14 @@ export function UsersTable({ users }: { users: UserRow[] }) {
   const [appliedFilters, setAppliedFilters] =
     useState<FilterDraft>(DEFAULT_FILTERS);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  useEffect(() => {
+    setPagination((p) => ({ ...p, pageIndex: 0 }));
+  }, [appliedFilters]);
 
   // Get unique organizations
   const organizations = useMemo(() => {
@@ -105,9 +115,12 @@ export function UsersTable({ users }: { users: UserRow[] }) {
 
   const table = useReactTable({
     data: filteredUsers,
+    state: { pagination },
+    onPaginationChange: setPagination,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   // Handler functions
@@ -157,10 +170,14 @@ export function UsersTable({ users }: { users: UserRow[] }) {
         <table className={styles.table}>
           <TableHeader headerGroups={table.getHeaderGroups()} />
           <tbody>
-            <TableRows rows={table.getRowModel().rows} columns={columns} />
+            <TableRows
+              rows={table.getPaginationRowModel().rows}
+              columns={columns}
+            />
           </tbody>
         </table>
       </div>
+      <Pagination table={table} />
     </div>
   );
 }

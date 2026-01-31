@@ -1,4 +1,4 @@
-import { UserStatus } from "../types";
+import { UserStatus } from "./types";
 
 const STATUSES: readonly UserStatus[] = [
   "Inactive",
