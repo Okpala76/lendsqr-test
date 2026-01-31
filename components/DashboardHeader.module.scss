@@ -1,48 +1,72 @@
 .container {
+  width: 100%;
+  height: 100px;
   background-color: white;
-  width: 1440;
-  height: 100;
   box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.04);
   z-index: 50;
-  display: block;
-  position: relative;
+}
+
+/* keeps content nicely spaced like your screenshot */
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  /* horizontal padding like a dashboard */
+  padding: 0 30px;
+}
+
+/* left brand */
+.left {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
 }
 
 .brandGroup {
-  position: absolute;
-  top: 35px;
-  left: 30px;
-  width: 144.803955078125;
-  height: 30px;
-
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+/* middle search should take remaining space */
+.middle {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+
+/* search bar */
 .search {
-  position: absolute;
-  width: 400;
-  height: 40;
-  top: 30px;
-  left: 343px;
-  opacity: 0.2;
-  border-width: 1px;
-  border-radius: 8px;
-  border-color: #213f7d;
-  &:focus {
-    border-color: #39cdcc;
-    box-shadow: 0 0 0 3px rgba(57, 205, 204, 0.25); // a “ring”-like focus
-  }
+  width: min(400px, 100%);
+  height: 40px;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
+  border: 1px solid rgba(33, 63, 125, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+
+  /* important: this applies when the input is focused */
+  &:focus-within {
+    border-color: #39cdcc;
+    box-shadow: 0 0 0 3px rgba(57, 205, 204, 0.25);
+  }
 }
 
 .searchInput {
-  color: black;
-  padding: 5%;
+  flex: 1 1 auto;
+  height: 100%;
+  padding: 0 14px;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: #213f7d;
+
   &::placeholder {
     color: rgba(84, 95, 125, 0.45);
   }
@@ -54,8 +78,7 @@
 
   background-color: #39cdcc;
   color: white;
-
-  border-radius: 0 8px 8px 0;
+  border: none;
 
   display: inline-flex;
   align-items: center;
@@ -68,67 +91,79 @@
   }
 }
 
-.docsLink {
-  position: absolute;
-  width: 37;
-  height: 19;
-  top: 44px;
-  left: 1100px;
-  opacity: 1;
-  color: #213f7d;
+/* right side controls */
+.right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
-  font: "Roboto", sans-serif;
+.docsLink {
+  color: #213f7d;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: 400;
-  text-decoration: underline solid;
+  text-decoration: underline;
 }
 
 .iconButton {
-  position: absolute;
-  width: 26;
-  height: 26;
-  top: 37px;
-  left: 1184px;
-  opacity: 1;
-  display: block;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 
-  /* child */
-  .bell {
-    position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-    top: 1.73px;
-    left: 3.16px;
+  border-radius: 8px;
 
-    width: 19.67px;
-    height: 22.74px;
-
-    stroke: #213f7d;
-    stroke-width: 0.4px;
+  &:hover {
+    background: rgba(33, 63, 125, 0.06);
   }
 }
 
+.bell {
+  /* no absolute positioning needed */
+  width: 20px;
+  height: auto;
+}
+
+/* Next/Image with fill needs a positioned parent */
 .avatar {
-  position: absolute;
   width: 48px;
   height: 48px;
-  top: 26px;
-  left: 1240px;
-  opacity: 1;
   border-radius: 50%;
   overflow: hidden;
+  position: relative;
+  flex: 0 0 auto;
 }
 
 .userButton {
-  position: absolute;
-  left: 1298px;
-  top: 44px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #213f7d;
   font-family: "Work Sans";
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
 
-  display: flex;
-  align-items: center;
-  color: #213f7d;
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  &:hover {
+    background: rgba(33, 63, 125, 0.06);
+  }
+}
+
+.userName {
+  white-space: nowrap;
 }

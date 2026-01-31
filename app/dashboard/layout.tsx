@@ -9,7 +9,7 @@ const UserDashboard = async ({ children }: PropsWithChildren) => {
         <DashboardHeader />
         <div className="flex flex-1 ">
           <DashboardSidebar />
-          <main className="flex-1 bg-[#FBFBFB] py-5 px-40">{children}</main>
+          <main className="flex-1 px-4 py-5 md:px-10 lg:px-40">{children}</main>
         </div>
       </div>
     </>
