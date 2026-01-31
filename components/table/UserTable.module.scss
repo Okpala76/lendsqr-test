@@ -6,6 +6,57 @@
   gap: 1rem;
 }
 
+.rowActionsPopup {
+  position: fixed;
+  width: 180px;
+  height: 130px;
+
+  background: #ffffff;
+  border-radius: 4px;
+
+  /* design border: #545F7D0A */
+  border: 1px solid rgba(84, 95, 125, 0.04);
+
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.08);
+  z-index: 2000;
+
+  display: flex;
+  align-items: stretch;
+}
+
+.rowActionsMenu {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowActionsItem {
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 10px 8px;
+  border-radius: 6px;
+
+  color: #213f7d;
+  font-size: 14px;
+  text-align: left;
+
+  &:hover {
+    background: rgba(33, 63, 125, 0.06);
+  }
+}
+
 .header {
   display: flex;
   align-items: flex-start;

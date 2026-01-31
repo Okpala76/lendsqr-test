@@ -67,6 +67,7 @@ function TableRows({
 // Column definitions builder
 export function buildTableColumns(
   onFilterClick: (rect: DOMRect) => void,
+  onRowActionsClick: (args: { userId: string; rect: DOMRect }) => void,
 ): ColumnDef<UserRow>[] {
   return [
     {
@@ -127,11 +128,15 @@ export function buildTableColumns(
     {
       header: () => null,
       id: "actions",
-      cell: () => (
+      cell: ({ row }) => (
         <button
           type="button"
           className={styles.actionButton}
           aria-label="Row actions"
+          onClick={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            onRowActionsClick({ userId: row.original.id, rect });
+          }}
         >
           <span>⋮</span>
         </button>

@@ -9,6 +9,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { UsersFilterCard } from "./FilterCard";
 import Pagination from "./Pagination";
+import RowActionsMenu from "./RowActionsMenu";
 import { TableHeader, TableRows, buildTableColumns } from "./TableComponents";
 import styles from "./UserTable.module.scss";
 import { DEFAULT_FILTERS, FilterDraft, UserRow } from "./types";
@@ -16,6 +17,10 @@ import { getGeneratedStatus, includesInsensitive, toYyyyMmDd } from "./utils";
 
 export type { UserRow };
 
+type RowActionMenuState = {
+  userId: string;
+  anchorRect: DOMRect;
+};
 export function UsersTable({ users }: { users: UserRow[] }) {
   const [filterDraft, setFilterDraft] = useState<FilterDraft>(DEFAULT_FILTERS);
   const [filterAnchorRect, setFilterAnchorRect] = useState<DOMRect | null>(
@@ -29,6 +34,36 @@ export function UsersTable({ users }: { users: UserRow[] }) {
     pageSize: 10,
   });
 
+  const [rowActionMenu, setRowActionMenu] = useState<RowActionMenuState | null>(
+    null,
+  );
+  useEffect(() => {
+    if (!rowActionMenu) return;
+
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const isInsideMenu = target.closest('[data-row-actions-menu="true"]');
+      const isActionButton = target.closest('button[aria-label="Row actions"]');
+
+      if (!isInsideMenu && !isActionButton) {
+        setRowActionMenu(null);
+      }
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setRowActionMenu(null);
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [rowActionMenu]);
   useEffect(() => {
     setPagination((p) => ({ ...p, pageIndex: 0 }));
   }, [appliedFilters]);
@@ -110,7 +145,21 @@ export function UsersTable({ users }: { users: UserRow[] }) {
       setIsFilterOpen(true);
     };
 
-    return buildTableColumns(openFilterAt);
+    const openRowActionsAt = ({
+      userId,
+      rect,
+    }: {
+      userId: string;
+      rect: DOMRect;
+    }) => {
+      setRowActionMenu((prev) => {
+        // toggle if you click the same row’s button again
+        if (prev?.userId === userId) return null;
+        return { userId, anchorRect: rect };
+      });
+    };
+
+    return buildTableColumns(openFilterAt, openRowActionsAt);
   }, []);
 
   const table = useReactTable({
@@ -134,6 +183,35 @@ export function UsersTable({ users }: { users: UserRow[] }) {
     setAppliedFilters(DEFAULT_FILTERS);
     setIsFilterOpen(false);
   };
+
+  function getRowActionsPopupStyle(anchorRect: DOMRect) {
+    // design size
+    const menuWidth = 180;
+    const menuHeight = 130;
+    const gap = 8;
+    const viewportPadding = 12;
+
+    // default: open below the button, right-aligned to it
+    let top = anchorRect.bottom + gap;
+    let left = anchorRect.right - menuWidth;
+
+    // keep within viewport horizontally
+    const maxLeft = window.innerWidth - menuWidth - viewportPadding;
+    left = Math.max(viewportPadding, Math.min(left, maxLeft));
+
+    // if it would go off the bottom, open above the button
+    const wouldOverflowBottom =
+      top + menuHeight + viewportPadding > window.innerHeight;
+    if (wouldOverflowBottom) {
+      top = anchorRect.top - menuHeight - gap;
+    }
+
+    // keep within viewport vertically
+    const maxTop = window.innerHeight - menuHeight - viewportPadding;
+    top = Math.max(viewportPadding, Math.min(top, maxTop));
+
+    return { top, left };
+  }
 
   return (
     <div className={styles.container}>
@@ -178,6 +256,20 @@ export function UsersTable({ users }: { users: UserRow[] }) {
         </table>
       </div>
       <Pagination table={table} />
+      {rowActionMenu ? (
+        <div className={styles.relativeContainer}>
+          <div
+            className={styles.rowActionsPopup}
+            data-row-actions-menu="true"
+            style={getRowActionsPopupStyle(rowActionMenu.anchorRect)}
+          >
+            <RowActionsMenu
+              user={filteredUsers.find((u) => u.id === rowActionMenu.userId)!}
+              onClose={() => setRowActionMenu(null)}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
