@@ -1,5 +1,6 @@
-// LoginForm.tsx
+"use client";
 import { useLoginForm } from "@/hooks/useLoginForm";
+import { useRouter } from "next/navigation";
 import styles from "./Loginform.module.scss";
 
 export const LoginForm = () => {
@@ -12,8 +13,11 @@ export const LoginForm = () => {
     handleSubmit,
   } = useLoginForm();
 
+  const router = useRouter();
+
   const onSubmit = (data: { email: string; password: string }) => {
     // TODO: submit logic
+    router.push("/dashboard");
     console.log(data);
   };
 
