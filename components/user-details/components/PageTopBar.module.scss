@@ -1,0 +1,67 @@
+.topBar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.backLink {
+  border: none;
+  background: transparent;
+  color: #545f7d;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: "Work Sans";
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  color: #213f7d;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.blacklistBtn,
+.activateBtn {
+  width: 170px;
+  height: 40px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+
+  font-family: "Work Sans";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  background: transparent;
+  cursor: pointer;
+}
+
+.blacklistBtn {
+  border-color: #e4033b;
+  color: #e4033b;
+}
+
+.activateBtn {
+  border-color: #39cdcc;
+  color: #39cdcc;
+}
+
+.blacklistBtn:hover,
+.activateBtn:hover {
+  filter: brightness(0.95);
+}

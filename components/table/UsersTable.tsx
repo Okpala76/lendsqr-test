@@ -6,6 +6,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { UsersFilterCard } from "./FilterCard";
 import Pagination from "./Pagination";
@@ -14,7 +15,6 @@ import { TableHeader, TableRows, buildTableColumns } from "./TableComponents";
 import styles from "./UserTable.module.scss";
 import { DEFAULT_FILTERS, FilterDraft, UserRow } from "./types";
 import { getGeneratedStatus, includesInsensitive, toYyyyMmDd } from "./utils";
-
 export type { UserRow };
 
 type RowActionMenuState = {
@@ -37,6 +37,8 @@ export function UsersTable({ users }: { users: UserRow[] }) {
   const [rowActionMenu, setRowActionMenu] = useState<RowActionMenuState | null>(
     null,
   );
+  const router = useRouter();
+
   useEffect(() => {
     if (!rowActionMenu) return;
 
@@ -266,6 +268,9 @@ export function UsersTable({ users }: { users: UserRow[] }) {
             <RowActionsMenu
               user={filteredUsers.find((u) => u.id === rowActionMenu.userId)!}
               onClose={() => setRowActionMenu(null)}
+              onViewDetails={(user) =>
+                router.push(`/dashboard/user/${user.id}`)
+              }
             />
           </div>
         </div>
